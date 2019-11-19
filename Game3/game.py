@@ -1,6 +1,4 @@
-import arcade
-from constants import *
-from Player_sprite import *
+from Game3.Player_sprite import *
 
 
 class YourGameClassRenameThis(arcade.Window):
@@ -12,6 +10,7 @@ class YourGameClassRenameThis(arcade.Window):
         self.wall_list = None
         self.player_list = None
         self.Player_sprite = None
+        self.physics_engine = None
 
     def setup(self):
         # Setup the game (or reset the game)
@@ -23,6 +22,7 @@ class YourGameClassRenameThis(arcade.Window):
         self.Player_sprite = Player()
         self.player_list.append(self.Player_sprite)
 
+        self.physics_engine = arcade.PhysicsEnginePlatformer(self.wall_list, self.Player_sprite, GRAVITY)
         # set up Level
         level_name = "Level1.tmx"
         ground_layer_name = 'Wall'
@@ -53,12 +53,17 @@ class YourGameClassRenameThis(arcade.Window):
 
     def on_key_release(self, key, modifiers):
 
-        if key == arcade.key.LEFT or key == arcade.key.A:
-            self.Player_sprite.release()
+        if key == arcade.key.UP or key == arcade.key.W:
+            self.Player_sprite.change_y = 0
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            self.Player_sprite.change_y = 0
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.Player_sprite.change_x = 0
         elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.Player_sprite.release()
+            self.Player_sprite.change_x = 0
 
-
+    def on_update(self, delta_time):
+        self.physics_engine.update()
 
 def main():
     window = YourGameClassRenameThis()

@@ -1,0 +1,8 @@
+import arcade
+
+WINDOW_WIDTH = 1024
+WINDOW_HEIGHT = 768
+BACKGROUND_COLOR = arcade.color.BLACK
+GAME_TITLE = "Fiendship"
+HEIGHT = 48
+WIDTH = 64
