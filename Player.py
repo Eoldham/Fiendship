@@ -1,7 +1,10 @@
 import arcade
+from Room import *
+from Levels import *
+from game3 import *
 
 
-class Player():
+class Player:
     def __init__(self):
         super().__init__()
         self.start = []
@@ -10,6 +13,9 @@ class Player():
         self.left = 0
         self.bottom = 0
 
-    def setStart(self):
-        self.left = self.start[0]
-        self.bottom = self.start[1]
+    def set_start(self):
+        pass
+
+    def set_end(self):
+        pass
+

@@ -2,12 +2,15 @@ import arcade
 import random
 
 
-class generate_room():
+class room():
     def __init__(self):
         super().__init__()
         self.width = 100
         self.height = 100
         self.coordinates = []
+        self.coins = []
+        self.player_start = []
+        self.next_level = []
 
     def choose_size(self):
         width = random.randint(400, 800)
@@ -24,10 +27,10 @@ class generate_room():
             bottom_bottom = 0
             coordinate_bottom = [bottom_left*50, bottom_bottom*50]
             self.coordinates.append(coordinate_bottom)
-            Top_left = x
-            Top_bottom = h
-            coordinate_Top = [Top_left * 50 , Top_bottom * 50]
-            self.coordinates.append(coordinate_Top)
+            top_left = x
+            top_bottom = h
+            coordinate_top = [top_left * 50 , top_bottom * 50]
+            self.coordinates.append(coordinate_top)
         for y in range(h):
             left_left = 0
             left_bottom = y
@@ -68,3 +71,47 @@ class generate_room():
                     coordinate = [xval * 50, yval * 50]
                     yval -= 1
                     self.coordinates.append(coordinate)
+
+    def add_friend_coin(self):
+        w = int(self.width / 50)
+        h = int(self.height / 50)
+        coin_num = random.randint(1,4)
+        for c in range(coin_num):
+            left = random.randint(1,w-1)
+            for y in range(2):
+                bottom = y
+                if [left,bottom] in self.coordinates:
+                    y = 0
+                else:
+                    y = 4
+                    coordinate = [left*50,bottom*50]
+                    self.coins.append(coordinate)
+
+    def player_start(self):
+        w = int(self.width / 50)
+        h = int(self.height / 50)
+        left = random.randint(1,w-1)
+        for y in range (2):
+            bottom = y
+            if [left, bottom] in self.coordinates or [left,bottom] in self.coins:
+                y = 0
+            else:
+                y = 4
+                coordinate = [left*50, bottom*50]
+                self.player_start.append(coordinate)
+
+    def next_level(self):
+        w = int(self.width / 50)
+        h = int(self.height / 50)
+        left = random.randint(1, w - 1)
+        for y in range(2):
+            bottom = y
+            if [left, bottom] in self.coordinates or [left, bottom] in self.coins or [left,bottom] in self.player_start:
+                y = 0
+            else:
+                y = 4
+                coordinate = [left * 50, bottom * 50]
+                self.next_level.append(coordinate)
+
+
+

@@ -9,7 +9,7 @@ class allLevels():
 
     def create_rooms(self):
         for looper in range(self.num_of_rooms):
-            current_room = generate_room()
+            current_room = room()
             current_room.choose_size()
             current_room.create_walls()
             room_width = current_room.width

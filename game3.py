@@ -1,7 +1,7 @@
 import arcade
 import os
 from Player import *
-from Room import generate_room
+from Room import *
 
 WINDOW_WIDTH = 900
 WINDOW_HEIGHT = 800
@@ -27,7 +27,8 @@ class Fiendship(arcade.Window):
         self.wall_list = arcade.SpriteList()
         self.player_list = arcade.SpriteList()
 
-        self.all_rooms =
+        self.all_rooms = room()
+
 
 
 
