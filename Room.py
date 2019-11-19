@@ -17,16 +17,34 @@ class generate_room():
         self.height = height
 
     def create_walls(self):
-        #flawed math
+        # flawed math
         wall_list = []
         coordinate = []
-        for x in range (int(self.width/50)):
-            randx = random.randint(0 + 20, self.width - 20)
-            randy = random.randint(0 + 20, self.height - 20)
-            if [randx, randy] in wall_list:
-                x -= 1
+        checker = []
+        w = int(self.width / 50)
+        h = int(self.height / 50)
+
+        for x in range(w):
+            for looper in range(2):
+                xval = random.randint(1, w - 2)
+                if xval in checker:
+                    looper = 0
+                else:
+                    looper = 1
+                    checker.append(xval)
+            if random.randint(0, 2) == 1:
+                yval = 0
+                block_number = random.randint(0, int(h / 2) - 1)
+                for num in range(block_number):
+                    coordinate = [xval*50, yval*50]
+                    yval += 1
+                    wall_list.append(coordinate)
             else:
-                coordinate = [randx,randy]
-                wall_list.append(coordinate)
-                x += 1
+                yval = h
+                block_number = random.randint(0, int(h / 2) - 1)
+                for num in range(block_number):
+                    coordinate = [xval*50, yval*50]
+                    yval -= 1
+                    wall_list.append(coordinate)
+        print (wall_list)
         self.coordinates = wall_list

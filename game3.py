@@ -28,22 +28,22 @@ class Fiendship(arcade.Window):
         room_height = room.height
 
         for x in range(room_width):
-            border = arcade.Sprite("image/wall.png",.05)
+            border = arcade.Sprite("image/wall.png",.25)
             border.left = x
             border.bottom = 0
             self.wall_list.append(border)
         for x in range (room_width):
-            border = arcade.Sprite("image/wall.png",.05)
+            border = arcade.Sprite("image/wall.png",.25)
             border.left = x
             border.bottom = room_height
             self.wall_list.append(border)
         for y in range(room_height):
-            border = arcade.Sprite("image/wall.png",.05)
+            border = arcade.Sprite("image/wall.png",.25)
             border.left = 0
             border.bottom = y
             self.wall_list.append(border)
         for y in range(room_height):
-            border = arcade.Sprite("image/wall.png",.05)
+            border = arcade.Sprite("image/wall.png",.25)
             border.left = room_width
             border.bottom = y
             self.wall_list.append(border)
@@ -51,7 +51,10 @@ class Fiendship(arcade.Window):
         coordinates = room.coordinates
         for coordinate in coordinates:
             wall = arcade.Sprite("image/wall.png",.25)
-            wall.position = coordinate
+            left = coordinate[0]
+            bottom= coordinate[1]
+            wall.left = left
+            wall.bottom = bottom
             self.wall_list.append(wall)
 
     def on_draw(self):
