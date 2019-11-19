@@ -1,8 +1,9 @@
 import arcade
-
+import os
 from Room import generate_room
 
-WINDOW_WIDTH = 800
+
+WINDOW_WIDTH = 900
 WINDOW_HEIGHT = 800
 BACKGROUND_COLOR = arcade.color.BLACK
 GAME_TITLE = "Fiendship"
@@ -26,26 +27,32 @@ class Fiendship(arcade.Window):
         room_width = room.width
         room_height = room.height
 
-        for x in (0, room_width):
-            border = arcade.Sprite("images/wall.png", 1)
-            border.center_x = x
-            border.center_y = 0
+        for x in range(room_width):
+            border = arcade.Sprite("image/wall.png",.05)
+            border.left = x
+            border.bottom = 0
             self.wall_list.append(border)
-        for x in (0, room_width):
-            border = arcade.Sprite("images/wall.png", 1)
-            border.center_x = x
-            border.center_y = room_height
+        for x in range (room_width):
+            border = arcade.Sprite("image/wall.png",.05)
+            border.left = x
+            border.bottom = room_height
             self.wall_list.append(border)
-        for y in (0, room_height):
-            border = arcade.Sprite("images/wall.png", 1)
-            border.center_x = 0
-            border.center_y = y
+        for y in range(room_height):
+            border = arcade.Sprite("image/wall.png",.05)
+            border.left = 0
+            border.bottom = y
             self.wall_list.append(border)
-        for y in (0, room_height):
-            border = arcade.Sprite("images/all.png", 1)
-            border.center_x = room_width
-            border.center_y = y
+        for y in range(room_height):
+            border = arcade.Sprite("image/wall.png",.05)
+            border.left = room_width
+            border.bottom = y
             self.wall_list.append(border)
+
+        coordinates = room.coordinates
+        for coordinate in coordinates:
+            wall = arcade.Sprite("image/wall.png",.25)
+            wall.position = coordinate
+            self.wall_list.append(wall)
 
     def on_draw(self):
         arcade.start_render()
