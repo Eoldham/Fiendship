@@ -1,5 +1,6 @@
 import arcade
 import random
+from constants import *
 
 
 class room():

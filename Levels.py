@@ -1,5 +1,6 @@
 import arcade
 from Room import *
+from constants import *
 
 class allLevels():
     def __init__(self):

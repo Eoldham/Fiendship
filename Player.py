@@ -2,6 +2,7 @@ import arcade
 from Room import *
 from Levels import *
 from game3 import *
+from constants import *
 
 
 class Player:
@@ -19,3 +20,14 @@ class Player:
     def set_end(self):
         pass
 
+    def up(self):
+        pass
+
+    def down(self):
+        pass
+
+    def right(self):
+        pass
+
+    def left(self):
+        pass

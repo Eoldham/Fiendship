@@ -2,11 +2,7 @@ import arcade
 from Player import *
 from Levels import *
 from Room import *
-
-WINDOW_WIDTH = 900
-WINDOW_HEIGHT = 800
-BACKGROUND_COLOR = arcade.color.BLACK
-GAME_TITLE = "Fiendship"
+from constants import *
 
 
 class GameView(arcade.View):
@@ -34,6 +30,7 @@ class GameView(arcade.View):
             player.left = left
             player.bottom = bottom
             self.player_list.append(player)
+            self.player_sprite = player
 
         # add coins
         coins = self.current_room.coins
@@ -55,6 +52,9 @@ class GameView(arcade.View):
             wall.bottom = bottom
             self.wall_list.append(wall)
 
+        # Physics engine
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.wall_list)
+
     def on_show(self):
         arcade.set_background_color(BACKGROUND_COLOR)
 
@@ -63,5 +63,27 @@ class GameView(arcade.View):
         self.wall_list.draw()
         self.player_list.draw()
 
+    def on_key_press(self, key, modifiers):
+        # player movements
+        if key == arcade.key.UP or key == arcade.key.W:
+            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED
+        if key == arcade.key.DOWN or key == arcade.key.S:
+            self.player_sprite.change_y = - PLAYER_MOVEMENT_SPEED
+        if key == arcade.key.LEFT or key == arcade.key.A:
+            self.player_sprite.change_x = - PLAYER_MOVEMENT_SPEED
+        if key == arcade.key.RIGHT or key == arcade.key.D:
+            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
+
+    def on_key_release(self, key, modifiers):
+        # player movements
+        if key == arcade.key.UP or key == arcade.key.W:
+            self.player_sprite.change_y = 0
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            self.player_sprite.change_y = 0
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.player_sprite.change_x = 0
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            self.player_sprite.change_x = 0
+
     def on_update(self, delta_time):
-        pass
+        self.physics_engine.update()
