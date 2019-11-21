@@ -1,12 +1,12 @@
 import arcade
 from gameview import *
 from constants import *
-
+from welcomeview import *
 
 def main():
     window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_TITLE)
-    game_view = GameView()
-    window.show_view(game_view)
+    welcome_view = WelcomeView()
+    window.show_view(welcome_view)
     arcade.run()
 
 

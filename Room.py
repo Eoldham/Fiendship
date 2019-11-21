@@ -12,6 +12,7 @@ class room():
         self.coins = []
         self.player_start = []
         self.next_level = []
+        self.monsters = []
 
     def choose_size(self):
         width = random.randint(400, 800)
@@ -114,3 +115,20 @@ class room():
                 y = 4
                 coordinate = [left * 50, bottom * 50]
                 self.next_level.append(coordinate)
+
+    def add_monster(self):
+        w = int(self.width / 50)
+        h = int(self.height / 50)
+        monster_num = random.randint(1, 4)
+        for c in range(monster_num):
+            left = random.randint(1, w - 1)
+            for y in range(2):
+                bottom = random.randint(1, h - 1)
+                coordinate = [left * 50, bottom * 50]
+                if coordinate in self.walls or self.coins or self.player_start:
+                    left = random.randint(1, w - 1)
+                    y = 0
+                else:
+                    coordinate = [left * 50, bottom * 50]
+                    self.coins.append(coordinate)
+                    break
