@@ -8,7 +8,7 @@ class room():
         super().__init__()
         self.width = 100
         self.height = 100
-        self.coordinates = []
+        self.walls = []
         self.coins = []
         self.player_start = []
         self.next_level = []
@@ -27,20 +27,20 @@ class room():
             bottom_left = x
             bottom_bottom = 0
             coordinate_bottom = [bottom_left * 50, bottom_bottom * 50]
-            self.coordinates.append(coordinate_bottom)
+            self.walls.append(coordinate_bottom)
             top_left = x
             top_bottom = h
             coordinate_top = [top_left * 50, top_bottom * 50]
-            self.coordinates.append(coordinate_top)
+            self.walls.append(coordinate_top)
         for y in range(h):
             left_left = 0
             left_bottom = y
             coordinate_left = [left_left * 50, left_bottom * 50]
-            self.coordinates.append(coordinate_left)
+            self.walls.append(coordinate_left)
             right_left = w
             right_bottom = y
             coordinate_right = [right_left * 50, right_bottom * 50]
-            self.coordinates.append(coordinate_right)
+            self.walls.append(coordinate_right)
 
     def create_walls(self):
 
@@ -57,20 +57,20 @@ class room():
                 else:
                     looper = 1
                     checker.append(xval)
-            if random.randint(0, 2) == 1:
-                yval = 0
-                block_number = random.randint(1, int(h / 2) - 1)
-                for num in range(block_number):
-                    coordinate = [xval * 50, yval * 50]
-                    yval += 1
-                    self.coordinates.append(coordinate)
-            else:
-                yval = h
-                block_number = random.randint(1, int(h / 2) - 1)
-                for num in range(block_number):
-                    coordinate = [xval * 50, yval * 50]
-                    yval -= 1
-                    self.coordinates.append(coordinate)
+                if random.randint(0, 2) == 1:
+                    yval = 0
+                    block_number = random.randint(1, int(h / 2) - 1)
+                    for num in range(block_number):
+                        coordinate = [xval * 50, yval * 50]
+                        yval += 1
+                        self.walls.append(coordinate)
+                else:
+                    yval = h
+                    block_number = random.randint(1, int(h / 2) - 1)
+                    for num in range(block_number):
+                        coordinate = [xval * 50, yval * 50]
+                        yval -= 1
+                        self.walls.append(coordinate)
 
     def add_fiend_coin(self):
         w = int(self.width / 50)
@@ -79,8 +79,8 @@ class room():
         for c in range(coin_num):
             left = random.randint(1, w - 1)
             for y in range(2):
-                bottom = y
-                if [left, bottom] in self.coordinates:
+                bottom = random.randint(1,h-1)
+                if [left, bottom] in self.walls:
                     y = 0
                 else:
                     y = 4
@@ -93,7 +93,7 @@ class room():
         left = random.randint(1, w - 1)
         for y in range(2):
             bottom = random.randint(1, h - 1)
-            if [left, bottom] in self.coordinates or [left, bottom] in self.coins:
+            if [left, bottom] in self.walls or [left, bottom] in self.coins:
                 y = 0
             else:
                 coordinate = [left * 50, bottom * 50]
@@ -106,8 +106,7 @@ class room():
         left = random.randint(1, w - 1)
         for y in range(2):
             bottom = random.randint(1, h - 1)
-            if [left, bottom] in self.coordinates or [left, bottom] in self.coins or [left,
-                                                                                      bottom] in self.player_start:
+            if [left, bottom] in self.walls or [left, bottom] in self.coins or [left,bottom] in self.player_start:
                 y = 0
             else:
                 y = 4

@@ -12,6 +12,7 @@ class GameView(arcade.View):
         # sprite lists
         self.wall_list = arcade.SpriteList()
         self.player_list = arcade.SpriteList()
+        self.coin_list = arcade.SpriteList()
 
         self.player = Player()
         # list of Rooms
@@ -40,10 +41,10 @@ class GameView(arcade.View):
             bottom = coin[1]
             sprite.left = left
             sprite.bottom = bottom
-            self.wall_list.append(sprite)
+            self.coin_list.append(sprite)
 
         # add walls
-        coordinates = self.current_room.coordinates
+        coordinates = self.current_room.walls
         for coordinate in coordinates:
             wall = arcade.Sprite("image/wall.png", .25)
             left = coordinate[0]
@@ -62,6 +63,7 @@ class GameView(arcade.View):
         arcade.start_render()
         self.wall_list.draw()
         self.player_list.draw()
+        self.coin_list.draw()
 
     def on_key_press(self, key, modifiers):
         # player movements
@@ -75,7 +77,7 @@ class GameView(arcade.View):
             self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
 
     def on_key_release(self, key, modifiers):
-        # player movements
+        # player stops
         if key == arcade.key.UP or key == arcade.key.W:
             self.player_sprite.change_y = 0
         elif key == arcade.key.DOWN or key == arcade.key.S:
@@ -87,3 +89,8 @@ class GameView(arcade.View):
 
     def on_update(self, delta_time):
         self.physics_engine.update()
+
+        # checks if coin is hit
+        coin_hit = arcade.check_for_collision_with_list(self.player_sprite, self.coin_list)
+        for coin in coin_hit:
+            coin.remove_from_sprite_lists()
