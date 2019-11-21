@@ -14,24 +14,25 @@ class GameView(arcade.View):
         self.player_list = arcade.SpriteList()
         self.coin_list = arcade.SpriteList()
 
-        self.player = Player()
+        #player
+        self.player_coins = 0
+        self.player_sprite = None
         # list of Rooms
         self.all_rooms = allLevels()
         self.all_rooms.create_rooms()
 
         self.current_room = self.all_rooms.rooms[0]
 
+
+
         # add player
-        self.player = Player()
         start = self.current_room.player_start
-        for s in start:
-            player = arcade.Sprite("image/player.png", .25)
-            left = s[0]
-            bottom = s[1]
-            player.left = left
-            player.bottom = bottom
-            self.player_list.append(player)
-            self.player_sprite = player
+        self.player_sprite = arcade.Sprite("image/player.png", .15)
+        left = start[0]
+        bottom = start[1]
+        self.player_sprite.left = left
+        self.player_sprite.bottom = bottom
+        self.player_list.append(self.player_sprite)
 
         # add coins
         coins = self.current_room.coins
@@ -93,4 +94,6 @@ class GameView(arcade.View):
         # checks if coin is hit
         coin_hit = arcade.check_for_collision_with_list(self.player_sprite, self.coin_list)
         for coin in coin_hit:
+            self.player_coins += 1
             coin.remove_from_sprite_lists()
+

@@ -79,25 +79,27 @@ class room():
         for c in range(coin_num):
             left = random.randint(1, w - 1)
             for y in range(2):
-                bottom = random.randint(1,h-1)
-                if [left, bottom] in self.walls:
+                bottom = random.randint(1, h - 1)
+                coordinate = [left * 50, bottom * 50]
+                if coordinate in self.walls:
+                    left = random.randint(1, w - 1)
                     y = 0
                 else:
-                    y = 4
                     coordinate = [left * 50, bottom * 50]
                     self.coins.append(coordinate)
+                    break
 
     def add_player_start(self):
         w = int(self.width / 50)
         h = int(self.height / 50)
         left = random.randint(1, w - 1)
-        for y in range(2):
+        for t in range(3000):
             bottom = random.randint(1, h - 1)
-            if [left, bottom] in self.walls or [left, bottom] in self.coins:
-                y = 0
-            else:
+            coordinate = [left * 50, bottom * 50]
+            if not (coordinate in self.walls or coordinate in self.coins):
                 coordinate = [left * 50, bottom * 50]
-                self.player_start.append(coordinate)
+                self.player_start.append(coordinate[0])
+                self.player_start.append(coordinate[1])
                 break
 
     def next_level(self):
@@ -106,7 +108,7 @@ class room():
         left = random.randint(1, w - 1)
         for y in range(2):
             bottom = random.randint(1, h - 1)
-            if [left, bottom] in self.walls or [left, bottom] in self.coins or [left,bottom] in self.player_start:
+            if [left, bottom] in self.walls or [left, bottom] in self.coins or [left, bottom] in self.player_start:
                 y = 0
             else:
                 y = 4
