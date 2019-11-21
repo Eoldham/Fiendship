@@ -15,6 +15,7 @@ class allLevels():
             room_width = current_room.width
             room_height = current_room.height
             current_room.add_border()
-            current_room.addFiendCoin()
-            current_room.playerStart()
+            current_room.add_fiend_coin()
+            current_room.add_player_start()
             self.rooms.append(current_room)
+

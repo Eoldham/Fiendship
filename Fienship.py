@@ -1,7 +1,5 @@
 import arcade
-import os
-from Player import *
-from Room import *
+from gameview import *
 
 WINDOW_WIDTH = 900
 WINDOW_HEIGHT = 800
@@ -9,12 +7,10 @@ BACKGROUND_COLOR = arcade.color.BLACK
 GAME_TITLE = "Fiendship"
 
 
-
-
-
 def main():
-    window = Fiendship()
-    window.setup()
+    window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_TITLE)
+    game_view = GameView()
+    window.show_view(game_view)
     arcade.run()
 
 

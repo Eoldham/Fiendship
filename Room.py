@@ -22,25 +22,24 @@ class room():
     def add_border(self):
         w = int(self.width / 50)
         h = int(self.height / 50)
-        for x in range(w+1):
+        for x in range(w + 1):
             bottom_left = x
             bottom_bottom = 0
-            coordinate_bottom = [bottom_left*50, bottom_bottom*50]
+            coordinate_bottom = [bottom_left * 50, bottom_bottom * 50]
             self.coordinates.append(coordinate_bottom)
             top_left = x
             top_bottom = h
-            coordinate_top = [top_left * 50 , top_bottom * 50]
+            coordinate_top = [top_left * 50, top_bottom * 50]
             self.coordinates.append(coordinate_top)
         for y in range(h):
             left_left = 0
             left_bottom = y
-            coordinate_left = [left_left*50,left_bottom*50]
+            coordinate_left = [left_left * 50, left_bottom * 50]
             self.coordinates.append(coordinate_left)
             right_left = w
             right_bottom = y
-            coordinate_right = [right_left*50, right_bottom*50]
+            coordinate_right = [right_left * 50, right_bottom * 50]
             self.coordinates.append(coordinate_right)
-
 
     def create_walls(self):
 
@@ -72,46 +71,44 @@ class room():
                     yval -= 1
                     self.coordinates.append(coordinate)
 
-    def add_friend_coin(self):
+    def add_fiend_coin(self):
         w = int(self.width / 50)
         h = int(self.height / 50)
-        coin_num = random.randint(1,4)
+        coin_num = random.randint(1, 4)
         for c in range(coin_num):
-            left = random.randint(1,w-1)
+            left = random.randint(1, w - 1)
             for y in range(2):
                 bottom = y
-                if [left,bottom] in self.coordinates:
+                if [left, bottom] in self.coordinates:
                     y = 0
                 else:
                     y = 4
-                    coordinate = [left*50,bottom*50]
+                    coordinate = [left * 50, bottom * 50]
                     self.coins.append(coordinate)
 
-    def player_start(self):
+    def add_player_start(self):
         w = int(self.width / 50)
         h = int(self.height / 50)
-        left = random.randint(1,w-1)
-        for y in range (2):
-            bottom = y
-            if [left, bottom] in self.coordinates or [left,bottom] in self.coins:
+        left = random.randint(1, w - 1)
+        for y in range(2):
+            bottom = random.randint(1, h - 1)
+            if [left, bottom] in self.coordinates or [left, bottom] in self.coins:
                 y = 0
             else:
-                y = 4
-                coordinate = [left*50, bottom*50]
+                coordinate = [left * 50, bottom * 50]
                 self.player_start.append(coordinate)
+                break
 
     def next_level(self):
         w = int(self.width / 50)
         h = int(self.height / 50)
         left = random.randint(1, w - 1)
         for y in range(2):
-            bottom = y
-            if [left, bottom] in self.coordinates or [left, bottom] in self.coins or [left,bottom] in self.player_start:
+            bottom = random.randint(1, h - 1)
+            if [left, bottom] in self.coordinates or [left, bottom] in self.coins or [left,
+                                                                                      bottom] in self.player_start:
                 y = 0
             else:
                 y = 4
                 coordinate = [left * 50, bottom * 50]
                 self.next_level.append(coordinate)
-
-
-
