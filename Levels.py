@@ -19,4 +19,6 @@ class allLevels():
             current_room.create_walls()
             current_room.add_fiend_coin()
             current_room.add_player_start()
+            current_room.add_next_level()
+            current_room.add_monster()
             self.rooms.append(current_room)

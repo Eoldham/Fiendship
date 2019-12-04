@@ -15,5 +15,5 @@ class WelcomeView(arcade.View):
                          arcade.color.GRAY, font_size=20, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        instructions_view = GameView()
-        self.window.show_view(instructions_view)
+        game_view = GameView()
+        self.window.show_view(game_view)

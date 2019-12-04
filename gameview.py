@@ -3,6 +3,7 @@ from Player import *
 from Levels import *
 from Room import *
 from constants import *
+from attackview import *
 
 
 class GameView(arcade.View):
@@ -13,20 +14,21 @@ class GameView(arcade.View):
         self.wall_list = arcade.SpriteList()
         self.player_list = arcade.SpriteList()
         self.coin_list = arcade.SpriteList()
+        self.monster_list = arcade.SpriteList()
+        self.end_sprite_list = arcade.SpriteList()
 
-        #player
+        # player
         self.player_coins = 0
         self.player_sprite = None
         # list of Rooms
         self.all_rooms = allLevels()
         self.all_rooms.create_rooms()
 
-        self.current_room = self.all_rooms.rooms[0]
-
-
+        self.current_room = 0
+        self.rooms = self.all_rooms.rooms
 
         # add player
-        start = self.current_room.player_start
+        start = self.rooms[self.current_room].player_start
         self.player_sprite = arcade.Sprite("image/player.png", .15)
         left = start[0]
         bottom = start[1]
@@ -34,8 +36,17 @@ class GameView(arcade.View):
         self.player_sprite.bottom = bottom
         self.player_list.append(self.player_sprite)
 
+        # add next room portal
+        end = self.rooms[self.current_room].next_level
+        self.end_sprite = arcade.Sprite("image/bush.png", .15)
+        left = end[0]
+        bottom = end[1]
+        self.end_sprite.left = left
+        self.end_sprite.bottom = bottom
+        self.end_sprite_list.append(self.end_sprite)
+
         # add coins
-        coins = self.current_room.coins
+        coins = self.rooms[self.current_room].coins
         for coin in coins:
             sprite = arcade.Sprite("image/coin.png", .15)
             left = coin[0]
@@ -44,8 +55,18 @@ class GameView(arcade.View):
             sprite.bottom = bottom
             self.coin_list.append(sprite)
 
+        # add monster
+        monsters = self.rooms[self.current_room].monsters
+        for monster in monsters:
+            sprite = arcade.Sprite("image/monster.png", .15)
+            left = monster[0]
+            bottom = monster[1]
+            sprite.left = left
+            sprite.bottom = bottom
+            self.monster_list.append(sprite)
+
         # add walls
-        coordinates = self.current_room.walls
+        coordinates = self.rooms[self.current_room].walls
         for coordinate in coordinates:
             wall = arcade.Sprite("image/wall.png", .25)
             left = coordinate[0]
@@ -65,6 +86,8 @@ class GameView(arcade.View):
         self.wall_list.draw()
         self.player_list.draw()
         self.coin_list.draw()
+        self.end_sprite_list.draw()
+        self.monster_list.draw()
 
     def on_key_press(self, key, modifiers):
         # player movements
@@ -97,3 +120,15 @@ class GameView(arcade.View):
             self.player_coins += 1
             coin.remove_from_sprite_lists()
 
+        # checks if monster is hit
+        monster_attack = arcade.check_for_collision_with_list(self.player_sprite, self.monster_list)
+        for monster in monster_attack:
+            attack_view = AttackView()
+            self.window.show_view(attack_view)
+            monster.remove_from_sprite_lists()
+
+        # checks if end point hit
+        end = arcade.check_for_collision_with_list(self.player_sprite, self.end_sprite_list)
+        for coordinate in end:
+            self.current_room = self.current_room + 1
+            coordinate.remove_from_sprite_lists()
