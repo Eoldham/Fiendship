@@ -31,7 +31,7 @@ class allLevels():
 
             # add player
             start = current_room.player_start
-            room_sprite.player_sprite = arcade.Sprite("image/player.png", .15)
+            room_sprite.player_sprite = arcade.Sprite("image/player.png", .25)
             left = start[0]
             bottom = start[1]
             room_sprite.player_sprite.left = left
@@ -66,6 +66,9 @@ class allLevels():
                 bottom = monster[1]
                 sprite.left = left
                 sprite.bottom = bottom
+                while sprite.change_x == 0 and sprite.change_y == 0:
+                    sprite.change_x = random.randrange(-4, 5)
+                    sprite.change_y = random.randrange(-4, 5)
                 room_sprite.monster_list.append(sprite)
 
             # add walls
