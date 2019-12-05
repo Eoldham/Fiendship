@@ -122,7 +122,7 @@ class room():
     def add_monster(self):
         w = int(self.width / 50)
         h = int(self.height / 50)
-        monster_num = random.randint(1, 4)
+        monster_num = random.randint(1, 5)
         for m in range(monster_num):
             left = random.randint(1, w - 1)
             for y in range(2):

@@ -41,7 +41,7 @@ class GameView(arcade.View):
         # add message
         output = f"Message: {self.message}"
         arcade.draw_text(output, 0, WINDOW_HEIGHT - 20, arcade.color.WHITE, 20)
-        output = f"Fiend Coins: {self.player_coins}"
+        output = f"Flowers collected: {self.player_coins}"
         arcade.draw_text(output, 0, WINDOW_HEIGHT - 50, arcade.color.WHITE, 20)
         output = f"Health: {self.player_health}"
         arcade.draw_text(output, 0, WINDOW_HEIGHT - 80, arcade.color.WHITE, 20)
@@ -99,13 +99,15 @@ class GameView(arcade.View):
                                                              self.rooms[self.current_room].wall_list)
             coordinate.remove_from_sprite_lists()
 
-        #bouncing monster
+        # bouncing monster
         temporary_walls = arcade.SpriteList()
         temporary_walls.append(self.rooms[self.current_room].next_level[0])
         for coin in self.rooms[self.current_room].coin_list:
             temporary_walls.append(coin)
         for wall in self.rooms[self.current_room].wall_list:
             temporary_walls.append(wall)
+        for monster in self.rooms[self.current_room].monster_list:
+            temporary_walls.append(monster)
         for monster in self.rooms[self.current_room].monster_list:
             monster.center_x += monster.change_x
             walls_hit = arcade.check_for_collision_with_list(monster, temporary_walls)
@@ -115,7 +117,7 @@ class GameView(arcade.View):
                 elif monster.change_x < 0:
                     monster.left = wall.right
             if len(walls_hit) > 0:
-                monster.change_x*= - 1
+                monster.change_x *= - 1
             monster.center_y += monster.change_y
             walls_hit = arcade.check_for_collision_with_list(monster, temporary_walls)
             for wall in walls_hit:

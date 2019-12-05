@@ -41,7 +41,7 @@ class allLevels():
 
             # add next room portal
             end = current_room.next_level
-            sprite = arcade.Sprite("image/bush.png", .15)
+            sprite = arcade.Sprite("image/end.png", .15)
             left = end[0]
             bottom = end[1]
             sprite.left = left
@@ -60,8 +60,17 @@ class allLevels():
 
             # add monster
             monsters = current_room.monsters
+            if sprite_room < 5:
+                image = "image/monster.png"
+            if 5 <= sprite_room < 10:
+                image = "image/monster2.png"
+            if 10 <= sprite_room < 15:
+                image = "image/monster3.png"
+            if 15 <= sprite_room <= 20:
+                image = "image/monster4.png"
+
             for monster in monsters:
-                sprite = arcade.Sprite("image/monster.png", .15)
+                sprite = arcade.Sprite(image, .25)
                 left = monster[0]
                 bottom = monster[1]
                 sprite.left = left
