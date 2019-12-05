@@ -12,7 +12,7 @@ class allLevels():
     def create_sprite_rooms(self):
         for sprite_room in range(self.num_of_rooms):
 
-            #set up a room that is not a sprite
+            # set up a room that is not a sprite
             current_room = room()
             current_room.choose_size()
             current_room.add_border()
@@ -30,12 +30,13 @@ class allLevels():
 
             # add player
             start = current_room.player_start
-            self.player_sprite = arcade.Sprite("image/player.png", .15)
+            room_sprite.player_sprite = arcade.Sprite("image/player.png", .15)
             left = start[0]
             bottom = start[1]
-            self.player_sprite.left = left
-            self.player_sprite.bottom = bottom
-            self.player_list.append(self.player_sprite)
+            room_sprite.player_sprite.left = left
+            room_sprite.player_sprite.bottom = bottom
+            room_sprite.player_list.append(room_sprite.player_sprite)
+
 
             # add next room portal
             end = current_room.next_level
@@ -77,4 +78,3 @@ class allLevels():
                 room_sprite.wall_list.append(wall)
 
             self.rooms.append(room_sprite)
-

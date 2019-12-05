@@ -138,8 +138,9 @@ class room():
 
 class roomSprite :
     def __init__(self):
-        self.wall_list = None
-        self.coin_list = None
-        self.monster_list = None
-        self.player_ = None
-        self.next_level = None
+        self.wall_list = arcade.SpriteList()
+        self.coin_list = arcade.SpriteList()
+        self.monster_list = arcade.SpriteList()
+        self.player_list = arcade.SpriteList()
+        self.next_level = arcade.SpriteList()
+        self.player_sprite = arcade.Sprite()
