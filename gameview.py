@@ -69,7 +69,9 @@ class GameView(arcade.View):
         # checks if monster is hit
         monster_attack = arcade.check_for_collision_with_list(self.rooms[self.current_room].player_sprite, self.rooms[self.current_room].monster_list)
         for monster in monster_attack:
-            attack_view = AttackView()
+            self.rooms[self.current_room].player_sprite.change_x = 0
+            self.rooms[self.current_room].player_sprite.change_y = 0
+            attack_view = AttackView(self)
             self.window.show_view(attack_view)
             monster.remove_from_sprite_lists()
 

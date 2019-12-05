@@ -6,9 +6,10 @@ import random
 
 class AttackView(arcade.View):
 
-    def __init__(self):
+    def __init__(self,game_view):
         super().__init__()
         self.monster_health = 0
+        self.game_view = game_view
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -38,8 +39,9 @@ class AttackView(arcade.View):
             defense += self.monster_health
             attack -= defense
             self.monster_health = self.monster_health - attack
-            if self.monster_health <= 0:
-                self.window.show_view(game_view)
+            #if self.monster_health <= 0:
+        if key == arcade.key.ENTER:
+            self.window.show_view(self.game_view)
 
 
     def on_key_release(self, key, modifiers):
