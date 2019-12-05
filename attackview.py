@@ -71,12 +71,40 @@ class AttackView(arcade.View):
         self.number_of_attacks = 0
         self.monster_letter = 0
         self.player_letter = 0
+        self.sprite_list = None
 
     def on_show(self):
-        arcade.set_background_color(arcade.color.BLACK)
+        arcade.set_background_color(arcade.color.BROWN_NOSE)
 
         # set monsters letter:
         self.monster_letter = random.randint(1, 26)
+
+        #create sprites
+        self.sprite_list = arcade.SpriteList()
+
+        #figure out monster sprite
+        if self.game_view.current_room < 5:
+            image = "image/monster.png"
+        if 5 <= self.game_view.current_room < 10:
+            image = "image/monster2.png"
+        if 10 <= self.game_view.current_room < 15:
+            image = "image/monster3.png"
+        if 15 <= self.game_view.current_room <= 20:
+            image = "image/monster4.png"
+
+        sprite = arcade.Sprite("image/player.png", 1)
+        left = 100
+        bottom = WINDOW_HEIGHT/2 + 30
+        sprite.left = left
+        sprite.bottom = bottom
+        self.sprite_list.append(sprite)
+
+        sprite2 = arcade.Sprite(image, 1)
+        left = 600
+        bottom = WINDOW_HEIGHT / 2 + 30
+        sprite2.left = left
+        sprite2.bottom = bottom
+        self.sprite_list.append(sprite2)
 
         # set monsters health
         if 0 <= self.game_view.current_room < 5:
@@ -90,18 +118,21 @@ class AttackView(arcade.View):
 
     def on_draw(self):
         arcade.start_render()
+
+        self.sprite_list.draw()
+
         arcade.draw_text("Guess a letter to decide the monsters attack, try to be spot on or exactly five away!",
                          WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2,
-                         arcade.color.WHITE, font_size=20, anchor_x="center")
+                         arcade.color.PINK_LACE, font_size=20, anchor_x="center")
         difference = abs(self.player_letter - self.monster_letter)
         output = f"Monster Health: {self.monster_health}"
-        arcade.draw_text(output, 100, 200, arcade.color.WHITE, 20)
+        arcade.draw_text(output, 100, 200, arcade.color.PINK_LACE, 20)
         output = f"Player Health: {self.game_view.player_health}"
-        arcade.draw_text(output, 600, 200, arcade.color.WHITE, 20)
+        arcade.draw_text(output, 600, 200, arcade.color.PINK_LACE, 20)
         output = f"Player Letter: {number_to_string(self.player_letter)}"
-        arcade.draw_text(output, 300, 100, arcade.color.WHITE, 20)
+        arcade.draw_text(output, 300, 100, arcade.color.PINK_LACE, 20)
         output = f"letters away: {difference}"
-        arcade.draw_text(output, 300, 50, arcade.color.WHITE, 20)
+        arcade.draw_text(output, 300, 50, arcade.color.PINK_LACE, 20)
 
     def on_key_press(self, key, modifiers):
         self.monster_attack(key, modifiers)
@@ -130,33 +161,20 @@ class AttackView(arcade.View):
         defense = 0
 
         # monsters defense:
-        if 0 <= self.game_view.current_room < 5:
-            defense = self.monster_health
-        if 5 <= self.game_view.current_room < 10:
-            defense = self.monster_health - 25
-        if 10 <= self.game_view.current_room < 15:
-            if self.monster_health < 50:
-                defense = 0
-            else:
-                defense = self.monster_health - 50
-        if 15 <= self.game_view.current_room <= 20:
-            if self.monster_health < 75:
-                defense = 0
-            else:
-                defense = self.monster_health - 75
+        defense = self.monster_health
 
         # stamina
         if 0 <= self.game_view.current_room < 5:
-            stamina = stamina - 25
+            stamina = int(stamina/8)
         if 5 <= self.game_view.current_room < 10:
-            stamina = stamina - 25
+            stamina = int(stamina/6)
         if 10 <= self.game_view.current_room < 15:
-            stamina = stamina - 25
+            stamina = int(stamina/4)
         if 15 <= self.game_view.current_room <= 20:
-            stamina = stamina
+            stamina = int(stamina/4)
 
         attack_power = stamina + bonus - defense
-        self.monster_health = self.monster_health - attack_power
+        self.monster_health = self.monster_health - abs(attack_power) - 1
         # end Attack View
         if self.monster_health <= 0:
 
