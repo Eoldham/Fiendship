@@ -13,6 +13,7 @@ class room():
         self.player_start = []
         self.next_level = []
         self.monsters = []
+        self.player_boundary = []
 
     def choose_size(self):
         width = random.randint(400, 800)
@@ -107,11 +108,12 @@ class room():
         w = int(self.width / 50)
         h = int(self.height / 50)
         left = random.randint(1, w - 1)
-        for t in range(3000):
+        for t in range(10000):
             bottom = random.randint(1, h - 1)
             coordinate = [left * 50, bottom * 50]
             player = [self.player_start[0], self.player_start[1]]
-            if not (coordinate in self.walls or coordinate in self.coins or coordinate in player):
+            if not (coordinate in self.walls or coordinate in self.coins or coordinate in player or coordinate in self.monsters or coordinate in self.player_boundary):
+                print (coordinate in self.player_boundary)
                 coordinate = [left * 50, bottom * 50]
                 self.next_level.append(coordinate[0])
                 self.next_level.append(coordinate[1])
@@ -135,6 +137,26 @@ class room():
                     coordinate = [left * 50, bottom * 50]
                     self.monsters.append(coordinate)
                     break
+
+    def create_player_boundary(self):
+        avoid = []
+        beginning_xval = self.player_start[0]
+        beginning_yval = self.player_start[1]
+        avoid.append(self.player_start)
+        for x in range (50):
+            xval = beginning_xval + x
+            for y in range(50):
+                yval = beginning_yval + y
+                avoid.append([xval,yval])
+        for x in range (50):
+            xval = beginning_xval - x
+            for y in range(50):
+                yval = beginning_yval-y
+                avoid.append([xval,yval])
+        self.player_boundary = avoid
+
+
+
 
 class roomSprite :
     def __init__(self):
