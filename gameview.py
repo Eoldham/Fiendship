@@ -23,10 +23,9 @@ class GameView(arcade.View):
         # list of Rooms
         self.all_rooms = allLevels()
         self.all_rooms.create_rooms()
-
         self.current_room = 0
         self.rooms = self.all_rooms.rooms
-
+        self.spriteRooms = []
         # add player
         start = self.rooms[self.current_room].player_start
         self.player_sprite = arcade.Sprite("image/player.png", .15)

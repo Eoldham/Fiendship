@@ -135,3 +135,11 @@ class room():
                     coordinate = [left * 50, bottom * 50]
                     self.monsters.append(coordinate)
                     break
+
+class roomSprite :
+    def __init__(self):
+        self.wall_list = None
+        self.coin_list = None
+        self.monster_list = None
+        self.player_ = None
+        self.next_level = None
