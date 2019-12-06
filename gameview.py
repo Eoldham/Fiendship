@@ -1,5 +1,4 @@
 import arcade
-from Player import *
 from Levels import *
 from Room import *
 from constants import *
@@ -14,7 +13,6 @@ class GameView(arcade.View):
         # player
         self.player_coins = 0
         self.player_health = 200
-        self.player_stamina = 100
 
         # list of Rooms
         self.message = "Messages"
@@ -47,8 +45,6 @@ class GameView(arcade.View):
         arcade.draw_text(output, 0, WINDOW_HEIGHT - 50, arcade.color.PINK_LACE, 20)
         output = f"Health: {self.player_health}"
         arcade.draw_text(output, 0, WINDOW_HEIGHT - 80, arcade.color.PINK_LACE, 20)
-        output = f"Stamina: {self.player_stamina}"
-        arcade.draw_text(output, 0, WINDOW_HEIGHT - 110, arcade.color.PINK_LACE, 20)
 
     def on_key_press(self, key, modifiers):
         # player movements
@@ -61,8 +57,8 @@ class GameView(arcade.View):
         if key == arcade.key.RIGHT or key == arcade.key.D:
             self.rooms[self.current_room].player_sprite.change_x = PLAYER_MOVEMENT_SPEED
         if key == arcade.key.P:
-            purchase_view = PurchaseView()
-            self.window.show_view(purchase_view)
+            purchase = PurchaseView(self)
+            self.window.show_view(purchase)
 
     def on_key_release(self, key, modifiers):
         # player stops

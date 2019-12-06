@@ -113,7 +113,6 @@ class room():
             coordinate = [left * 50, bottom * 50]
             player = [self.player_start[0], self.player_start[1]]
             if not (coordinate in self.walls or coordinate in self.coins or coordinate in player or coordinate in self.monsters or coordinate in self.player_boundary):
-                print (coordinate in self.player_boundary)
                 coordinate = [left * 50, bottom * 50]
                 self.next_level.append(coordinate[0])
                 self.next_level.append(coordinate[1])
