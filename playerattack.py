@@ -1,3 +1,6 @@
+"""
+Player attack view
+"""
 import arcade
 from constants import *
 from gameview import *
@@ -18,6 +21,7 @@ class playerAttack(arcade.View):
     def on_show(self):
         arcade.set_background_color(arcade.color.BROWN_NOSE)
 
+        # Plant sprites
         sprite = arcade.Sprite("image/planta.png", 1)
         left = 100
         bottom = 20
@@ -39,6 +43,7 @@ class playerAttack(arcade.View):
         sprite.bottom = bottom
         self.sprite_list.append(sprite)
 
+        # calls function that sets the three plants attack values
         self.plants_attack()
 
     def on_draw(self):
@@ -46,6 +51,7 @@ class playerAttack(arcade.View):
 
         self.sprite_list.draw()
 
+        # Instructions
         arcade.draw_text("Player Attack", WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 100,
                          arcade.color.PINK_LACE, font_size=50, anchor_x="center")
         arcade.draw_text("Each plant below has an attack", WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50,
@@ -58,6 +64,7 @@ class playerAttack(arcade.View):
                          arcade.color.PINK_LACE, font_size=20, anchor_x="center")
 
     def on_key_press(self, key: int, modifiers: int):
+        # whichever plant the player picks is used as the attack and then lowers the monsters health
         if key == arcade.key.A:
             self.game_view.monster_health = self.game_view.monster_health - self.plant_a
             self.window.show_view(self.game_view)
@@ -67,15 +74,18 @@ class playerAttack(arcade.View):
         elif key == arcade.key.C:
             self.game_view.monster_health = self.game_view.monster_health - self.plant_c
             self.window.show_view(self.game_view)
+        # makes sure no other keys can be pressed
         else:
             pass
 
+    # chooses random int in range than adds the bonus so that the attacks are different but fair
     def plants_attack(self):
         bonus = self.get_bonus()
         self.plant_a = random.randint(5, 20) + bonus
         self.plant_b = random.randint(5, 20) + bonus
         self.plant_c = random.randint(5, 20) + bonus
 
+    # Same function thats in Monsterattack, keeps things fair
     def get_bonus(self):
         bonus = 10
         if 0 <= self.game_view.current_room < 5:

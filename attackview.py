@@ -1,3 +1,8 @@
+"""
+Attack View
+Home base for the Monster and Player attacks
+"""
+
 import arcade
 from constants import *
 from gameview import *
@@ -21,6 +26,7 @@ class AttackView(arcade.View):
         self.monster_letter = 0
         self.player_letter = 0
         self.current_room = self.game_view.current_room
+        # keeps track of if its players or monsters turn to attack
         self.whose_attack = True
 
         # set monsters health
@@ -48,14 +54,14 @@ class AttackView(arcade.View):
             image = "image/monster3.png"
         if 15 <= self.game_view.current_room <= 20:
             image = "image/monster4.png"
-
+        # sets player sprite
         sprite = arcade.Sprite("image/player.png", 1)
         left = 100
         bottom = WINDOW_HEIGHT / 2 + 30
         sprite.left = left
         sprite.bottom = bottom
         self.sprite_list.append(sprite)
-
+        # sets monster sprite
         sprite2 = arcade.Sprite(image, 1)
         left = 600
         bottom = WINDOW_HEIGHT / 2 + 30
@@ -63,13 +69,11 @@ class AttackView(arcade.View):
         sprite2.bottom = bottom
         self.sprite_list.append(sprite2)
 
-
-
     def on_draw(self):
         arcade.start_render()
 
         self.sprite_list.draw()
-
+        # Instructions
         arcade.draw_text("Attack!!",
                          WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2,
                          arcade.color.PINK_LACE, font_size=20, anchor_x="center")
@@ -77,7 +81,7 @@ class AttackView(arcade.View):
                          WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40,
                          arcade.color.PINK_LACE, font_size=20, anchor_x="center")
         difference = abs(self.player_letter - self.monster_letter)
-
+        # Stats
         output = f"Monster Health: {self.monster_health}"
         arcade.draw_text(output, 100, 200, arcade.color.PINK_LACE, 20)
         output = f"Player Health: {self.game_view.player_health}"
@@ -92,21 +96,26 @@ class AttackView(arcade.View):
             purchase = PurchaseView(self)
             self.window.show_view(purchase)
         elif key == arcade.key.SPACE:
+            # checks to see if its players turn, if not space is not allowed to be used
             if self.whose_attack:
                 player_attack = playerAttack(self)
                 self.window.show_view(player_attack)
                 self.game_view.player_health = self.player_health
+                # switches the boolean
                 self.whose_attack = not self.whose_attack
                 if self.monster_health <= 0:
                     self.window.show_view(self.game_view)
             else:
                 pass
         elif key == arcade.key.ENTER:
+            # checks if monster is dead
             if self.monster_health <= 0:
                 self.window.show_view(self.game_view)
+            # checks to see if its monsters turn, if not enter is not allowed to be used
             elif not self.whose_attack:
                 monster_attack = monsterAttack(self)
                 self.window.show_view(monster_attack)
                 self.game_view.player_health = self.player_health
+                # switches the boolean
                 self.whose_attack = not self.whose_attack
         self.game_view.player_health = self.player_health

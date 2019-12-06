@@ -1,6 +1,10 @@
+"""
+Function used to convert a number to a string
+
+"""
 
 
-def number_to_string(num):
+def number_to_string(num: int):
     letter = ""
     if num == 1:
         letter = "a"

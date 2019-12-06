@@ -1,3 +1,8 @@
+"""
+Death screen
+called when player health is <= 0
+"""
+
 import arcade
 from constants import *
 

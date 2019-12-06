@@ -1,3 +1,8 @@
+"""
+Starting File that sets up the welcome window and runs the game
+"""
+
+
 import arcade
 from gameview import *
 from constants import *

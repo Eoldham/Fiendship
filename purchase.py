@@ -1,3 +1,7 @@
+"""
+This file is the flower shop View
+"""
+
 import arcade
 from gameview import *
 from attackview import *
@@ -12,7 +16,7 @@ class PurchaseView(arcade.View):
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BROWN_NOSE)
-
+        # Image of flower
         sprite = arcade.Sprite("image/coin.png", 1)
         left = WINDOW_WIDTH / 2 - 100
         bottom = WINDOW_HEIGHT / 2 + 60
@@ -24,7 +28,7 @@ class PurchaseView(arcade.View):
         arcade.start_render()
 
         self.sprite_list.draw()
-
+        # Instructions
         arcade.draw_text("Welcome to the Flower Shop!",
                          WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2,
                          arcade.color.PINK_LACE, font_size=40, anchor_x="center")
@@ -43,19 +47,16 @@ class PurchaseView(arcade.View):
         arcade.draw_text(output, 0, WINDOW_HEIGHT - 60, arcade.color.PINK_LACE, 20)
 
     def on_key_press(self, key, modifiers: int):
-        if key == arcade.key.S:
-            if self.game_view.player_coins == 0:
-                self.window.show_view(self.game_view)
-            else:
-                self.game_view.player_stamina = self.game_view.player_stamina + 5
-                self.game_view.player_coins = self.game_view.player_coins - 1
-        elif key == arcade.key.H:
+        # H adds 10 to health and subtracts a flower, if no more flowers sends back to previous screen
+        if key == arcade.key.H:
             if self.game_view.player_coins == 0:
                 self.window.show_view(self.game_view)
             else:
                 self.game_view.player_health = self.game_view.player_health + 10
                 self.game_view.player_coins = self.game_view.player_coins - 1
+        # b goes back to previous screen
         elif key == arcade.key.B:
             self.window.show_view(self.game_view)
+        # Just so no other keys will work
         else:
             pass

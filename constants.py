@@ -1,3 +1,7 @@
+"""
+Constants used throughout game
+"""
+
 import arcade
 
 WINDOW_WIDTH = 900

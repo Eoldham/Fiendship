@@ -1,3 +1,7 @@
+"""
+This is the Monster attack view
+"""
+
 import arcade
 from constants import *
 from gameview import *
@@ -15,6 +19,7 @@ class monsterAttack(arcade.View):
 
     def on_draw(self):
         arcade.start_render()
+        # Instructions
         arcade.draw_text("Vegetable Attack", WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 100,
                          arcade.color.PINK_LACE, font_size=50, anchor_x="center")
         arcade.draw_text("To defend yourself against the vegetable you must guess its favorite letter",
@@ -29,10 +34,15 @@ class monsterAttack(arcade.View):
                          WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 60,
                          arcade.color.PINK_LACE, font_size=15, anchor_x="center")
 
-    def on_key_press(self, symbol: int, modifiers: int):
-        self.monster_attack(symbol, modifiers)
+    """
+    The player is asked to guess a letter, the letter is converted to a number (i'm sure there is a better way to do this)
+    the monsters letter is random and compared to the players letter for the difference
+    the difference is the distance the letters are from eachother
+    If the difference is < 3 then the monsters attack = 0 if its greater than 3 then the attack is the difference 
+    added to the bonus (determined by level)
+    """
 
-    def monster_attack(self, key, modifiers):
+    def on_key_press(self, key, modifiers):
         monster_letter = random.randint(1, 26)
         player_letter = 0
         bonus = self.get_bonus()
@@ -92,6 +102,7 @@ class monsterAttack(arcade.View):
         else:
             player_letter = 12
 
+        # Sets the letters so that they can be seen on attack view
         self.game_view.monster_letter = monster_letter
         self.game_view.player_letter = player_letter
 
@@ -103,13 +114,16 @@ class monsterAttack(arcade.View):
 
         self.game_view.player_health = self.game_view.player_health - attack
 
-        print(self.game_view.player_health)
-
+        # checks to see if player is dead
         if self.game_view.player_health <= 0:
             dead_view = DeadView()
             self.window.show_view(dead_view)
         else:
             self.window.show_view(self.game_view)
+
+    """
+    Function that helps the attacks be equal as the levels increase 
+    """
 
     def get_bonus(self):
         bonus = 10

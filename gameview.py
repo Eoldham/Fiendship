@@ -1,21 +1,27 @@
+"""
+View where main part of the game happens
+"""
 import arcade
 from Levels import *
 from Room import *
 from constants import *
 from attackview import *
 from purchase import *
+from end import *
 
 
 class GameView(arcade.View):
     def __init__(self):
         super().__init__()
 
-        # player
+        # player variables
         self.player_coins = 0
         self.player_health = 200
 
-        # list of Rooms
+        # sets up messages for player
         self.message = "Messages"
+
+        # list of Rooms
         self.current_room = 0
         self.rooms = []
         levels = allLevels()
@@ -36,7 +42,6 @@ class GameView(arcade.View):
         self.rooms[self.current_room].player_list.draw()
         self.rooms[self.current_room].next_level.draw()
         self.rooms[self.current_room].monster_list.draw()
-
 
         # add message
         output = f"Message: {self.message}"
@@ -85,6 +90,7 @@ class GameView(arcade.View):
         monster_attack = arcade.check_for_collision_with_list(self.rooms[self.current_room].player_sprite,
                                                               self.rooms[self.current_room].monster_list)
         for monster in monster_attack:
+            # Stops the player sprite
             self.rooms[self.current_room].player_sprite.change_x = 0
             self.rooms[self.current_room].player_sprite.change_y = 0
             attack_view = AttackView(self)
@@ -96,11 +102,18 @@ class GameView(arcade.View):
                                                    self.rooms[self.current_room].next_level)
         for coordinate in end:
             self.current_room = self.current_room + 1
+            if self.current_room > 20:
+                end = EndView()
+                self.window.show_view(end)
             self.physics_engine = arcade.PhysicsEngineSimple(self.rooms[self.current_room].player_sprite,
                                                              self.rooms[self.current_room].wall_list)
             coordinate.remove_from_sprite_lists()
 
-        # bouncing monster
+        """
+        This is how the Vegetables leap around 
+        The temporary walls allow the monsters to bounce off everything including eachother without affecting the 
+        important sprite lists
+        """
         temporary_walls = arcade.SpriteList()
         temporary_walls.append(self.rooms[self.current_room].next_level[0])
         for coin in self.rooms[self.current_room].coin_list:
@@ -112,6 +125,7 @@ class GameView(arcade.View):
         for monster in self.rooms[self.current_room].monster_list:
             monster.center_x += monster.change_x
             walls_hit = arcade.check_for_collision_with_list(monster, temporary_walls)
+            #Switches direction when walls are hit
             for wall in walls_hit:
                 if monster.change_x > 0:
                     monster.right = wall.left

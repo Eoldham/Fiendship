@@ -1,3 +1,7 @@
+"""
+Welcomes Player and explains game
+"""
+
 import arcade
 from constants import *
 from gameview import *
