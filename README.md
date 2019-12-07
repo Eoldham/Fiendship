@@ -13,7 +13,7 @@ Then the vegetable gets a chance to attack, if the player guesses a letter close
 they won't get hurt. 
 
 ##Preview: 
-https://youtu.be/Cj9DIROD4xQ
+https://youtu.be/IvDIekzBYLk
 
 ##Installation: 
 ```
