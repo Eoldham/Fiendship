@@ -41,12 +41,12 @@ owlanne@udel.edu
 
 
 ## Acknowledgements: 
-###Tutorials:  
+### Tutorials:  
 Arcade Academy websites sample codes and 2d platformer example: <br>
 http://arcade.academy/examples/index.html<br>
 http://arcade.academy/examples/platform_tutorial/index.html
 
-###Images:
+### Images:
 Elephant image: https://opengameart.org/content/cute-2d-animals <br>
 Vegetable image: https://opengameart.org/content/veggy-friends <br>
 Hedge image: https://opengameart.org/content/ivy-hedge <br>
