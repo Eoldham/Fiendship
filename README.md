@@ -1,7 +1,7 @@
 # Fiendship
 
 ## Concept: 
-Help an elephant fight off leaping vegtables as you collect flowers and travel through different levels. 
+Help an elephant fight off leaping vegetables as you collect flowers and travel through different levels. 
 
 ## About: 
 This game is a procedurally generated set of 20 rooms. 
@@ -41,12 +41,12 @@ owlanne@udel.edu
 
 
 ## Acknowledgements: 
-### Tutorials:  
-arcade academy websites sample codes and 2d platformer example
-http://arcade.academy/examples/index.html
+###Tutorials:  
+Arcade Academy websites sample codes and 2d platformer example: <br>
+http://arcade.academy/examples/index.html<br>
 http://arcade.academy/examples/platform_tutorial/index.html
 
-### Images:
+###Images:
 Elephant image: https://opengameart.org/content/cute-2d-animals <br>
 Vegetable image: https://opengameart.org/content/veggy-friends <br>
 Hedge image: https://opengameart.org/content/ivy-hedge <br>
